@@ -21,6 +21,8 @@ dependencies {
     implementation("com.google.guava:guava:32.1.1-jre")
     implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+    implementation("org.jfree:jfreechart:1.0.19")
+    implementation("org.json:json:20230618")
 }
 
 testing {

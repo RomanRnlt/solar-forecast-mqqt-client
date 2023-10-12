@@ -1,16 +1,13 @@
 package solar.forecast.mqqt.client;
 
-import java.io.IOException;
-import java.text.ParseException;
-
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.json.JSONObject;
 import java.util.Scanner;
 
 public class App {
-    static String strasse, hausnummer, stadt, plz, bundesland, land;
+    static String strasse, hausnummer, stadt, plz, bundesland, land, kwp;
 
     public static void main(String[] args) {
+        clearScreen();
         AdresseEingabe();
         String broker = "tcp://localhost:1883";
         String clientId = "Client";
@@ -26,7 +23,8 @@ public class App {
 
             // Send a message to the server - CommandLine input
             // String message = "Moltkestraße&30&Karlsruhe&Baden-Württemberg&76133&DE";
-            String message = String.format("%s&%s&%s&%s&%s&%s", strasse, hausnummer, stadt, bundesland, plz, land);
+            String message = String.format("%s&%s&%s&%s&%s&%s&%s", strasse, hausnummer, stadt, bundesland, plz, land,
+                    kwp);
 
             mqttClientHandler.publishMessage("topic/server", message);
 
@@ -39,6 +37,14 @@ public class App {
         } catch (MqttException | InterruptedException me) {
             me.printStackTrace();
         }
+    }
+
+    public static void clearScreen() {
+
+        System.out.print("\033[H\033[2J");
+
+        System.out.flush();
+
     }
 
     public static void AdresseEingabe() {
@@ -67,8 +73,15 @@ public class App {
         // Den Benutzer nach seinem Land fragen
         System.out.print("Bitte geben Sie Ihr Länderkürzel ein (z.B. DE): ");
         land = scanner.nextLine();
+
+        // Den Benutzer nach kwp der Photovoltaikanlage fragen
+        System.out.print("Bitte geben Sie die Maximalleistung in KWP Ihrer Photovoltaikanlage ein (z.B. 3.4): ");
+        kwp = scanner.nextLine();
+
         // Den Scanner schließen, um Ressourcen freizugeben
         scanner.close();
+
+        System.out.println();
     }
 
 }

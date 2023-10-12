@@ -12,16 +12,13 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.awt.Color;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
 import java.util.concurrent.CountDownLatch;
 
 public class MqttClientHandler {
@@ -42,6 +39,7 @@ public class MqttClientHandler {
     System.out.println("Connecting to broker: " + client.getServerURI());
     client.connect(connOpts);
     System.out.println("Connected");
+    System.out.println();
 
     latch = new CountDownLatch(1);
 
@@ -50,7 +48,10 @@ public class MqttClientHandler {
       String receivedResponse = new String(responseMessage.getPayload());
       // System.out.println("Received response from server: " + receivedResponse);
       System.out.println("Received response from server");
+      System.out.println();
+
       outputController(receivedResponse);
+      System.out.println();
       // Release the latch to allow the program to exit
       latch.countDown();
 
@@ -98,12 +99,6 @@ public class MqttClientHandler {
     } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
-  }
-
-  private static JSONObject readFile(String filePath) throws IOException {
-    FileReader fileReader = new FileReader(filePath);
-    JSONTokener jsonTokener = new JSONTokener(fileReader);
-    return new JSONObject(jsonTokener);
   }
 
   private static void createCharts(JSONObject jsonData, String outputDir, String key)

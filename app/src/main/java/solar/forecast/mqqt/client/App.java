@@ -19,7 +19,7 @@ public class App {
             MqttClientHandler mqttClientHandler = new MqttClientHandler(broker, clientId);
 
             MessageCallback callback = (topic, message) -> {
-                System.out.println("Diagram xyz");
+                // System.out.println("Diagram xyz");
             };
 
             mqttClientHandler.connectAndSubscribe("topic/client", callback);

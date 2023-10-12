@@ -48,7 +48,8 @@ public class MqttClientHandler {
     // Subscribe to the response from the server
     client.subscribe(topic, (t, responseMessage) -> {
       String receivedResponse = new String(responseMessage.getPayload());
-      System.out.println("Received response from server: " + receivedResponse);
+      // System.out.println("Received response from server: " + receivedResponse);
+      System.out.println("Received response from server");
       outputController(receivedResponse);
       // Release the latch to allow the program to exit
       latch.countDown();
